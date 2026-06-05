@@ -33,8 +33,6 @@
       display: flex;
       flex-direction: column;
     }
-
-    /* NAV */
     nav {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
@@ -54,9 +52,11 @@
       text-decoration: none;
     }
     .logo svg { width: 28px; height: 28px; }
-    nav .tagline { font-size: 0.8rem; color: var(--text-muted); }
-
-    /* HERO */
+    .agency-name {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
     .hero {
       background: linear-gradient(135deg, #01696f 0%, #0c4e54 100%);
       color: white;
@@ -77,12 +77,7 @@
       margin: 0 auto 2rem;
       line-height: 1.6;
     }
-    .hero-badges {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
+    .hero-badges { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
     .badge {
       background: rgba(255,255,255,0.15);
       border: 1px solid rgba(255,255,255,0.25);
@@ -91,8 +86,19 @@
       font-size: 0.8rem;
       font-weight: 500;
     }
-
-    /* MAIN LAYOUT */
+    /* ERROR STATE */
+    .error-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      gap: 1rem;
+    }
+    .error-state svg { color: #ef4444; width: 48px; height: 48px; }
+    .error-state h2 { font-size: 1.25rem; font-weight: 700; }
+    .error-state p { color: var(--text-muted); max-width: 40ch; }
     main {
       flex: 1;
       max-width: 700px;
@@ -100,8 +106,6 @@
       margin: -2rem auto 4rem;
       padding: 0 1.5rem;
     }
-
-    /* CARD */
     .card {
       background: var(--surface);
       border-radius: 16px;
@@ -113,26 +117,12 @@
       padding-bottom: 1.25rem;
       border-bottom: 1px solid var(--border);
     }
-    .card-header h2 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 0.25rem;
-    }
+    .card-header h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.25rem; }
     .card-header p { font-size: 0.9rem; color: var(--text-muted); }
-
-    /* FORM */
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
-    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
     .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
     .form-group.full { grid-column: 1 / -1; }
-    label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text);
-    }
+    label { font-size: 0.85rem; font-weight: 600; color: var(--text); }
     label .req { color: var(--primary); margin-left: 2px; }
     input, select, textarea {
       width: 100%;
@@ -154,14 +144,9 @@
     input::placeholder, textarea::placeholder { color: #b0b8c4; }
     textarea { resize: vertical; min-height: 110px; line-height: 1.5; }
     select { cursor: pointer; }
-
-    /* SCORE */
     .score-group { grid-column: 1 / -1; }
     .score-label { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; display: block; }
-    .score-options {
-      display: flex;
-      gap: 0.75rem;
-    }
+    .score-options { display: flex; gap: 0.75rem; }
     .score-option { position: relative; }
     .score-option input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
     .score-option label {
@@ -185,8 +170,6 @@
       box-shadow: 0 2px 8px rgba(1,105,111,0.3);
     }
     .score-option label:hover { border-color: var(--primary); background: #f0fafa; }
-
-    /* SUBMIT */
     .btn-submit {
       width: 100%;
       margin-top: 1.75rem;
@@ -216,8 +199,6 @@
       display: none;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ALERTS */
     .alert {
       display: none;
       padding: 1rem 1.25rem;
@@ -232,8 +213,15 @@
     .alert-success { background: var(--success-bg); color: var(--success-text); border: 1px solid #6ee7b7; }
     .alert-error { background: var(--error-bg); color: var(--error-text); border: 1px solid #fca5a5; }
     .alert svg { flex-shrink: 0; width: 18px; height: 18px; }
-
-    /* FOOTER */
+    /* SKELETON */
+    .skeleton {
+      background: linear-gradient(90deg, #efefef 25%, #e0e0e0 50%, #efefef 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s ease-in-out infinite;
+      border-radius: 6px;
+      height: 1em;
+    }
+    @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
     footer {
       text-align: center;
       padding: 1.5rem;
@@ -243,8 +231,6 @@
       background: var(--surface);
     }
     .footer-logo { font-weight: 700; color: var(--primary); }
-
-    /* RESPONSIVE */
     @media (max-width: 560px) {
       .card { padding: 1.5rem; }
       .form-grid { grid-template-columns: 1fr; }
@@ -266,12 +252,12 @@
     </svg>
     LeadFlow
   </a>
-  <span class="tagline">Système de captation de prospects</span>
+  <span class="agency-name" id="agencyNameNav"></span>
 </nav>
 
 <div class="hero">
   <h1>Capturez vos prospects,<br/><em>automatiquement.</em></h1>
-  <p>Chaque contact rempli ici est instantanément enregistré dans votre CRM. Zéro saisie manuelle.</p>
+  <p id="heroSubtitle">Chaque contact rempli ici est instantanément enregistré dans votre CRM. Zéro saisie manuelle.</p>
   <div class="hero-badges">
     <span class="badge">⚡ Temps réel</span>
     <span class="badge">🔒 Données sécurisées</span>
@@ -280,10 +266,18 @@
 </div>
 
 <main>
-  <div class="card">
+  <!-- ERROR STATE : agency_id manquant ou invalide -->
+  <div class="card" id="errorState" style="display:none; text-align:center; padding: 3rem 2rem;">
+    <svg style="width:48px;height:48px;color:#ef4444;margin:0 auto 1rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:0.5rem;">Lien invalide</h2>
+    <p style="color:var(--text-muted);font-size:0.9rem;">Ce formulaire ne contient pas d'identifiant d'agence valide.<br/>Contactez votre prestataire LeadFlow.</p>
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="card" id="formCard">
     <div class="card-header">
-      <h2>Nouveau prospect</h2>
-      <p>Remplissez le formulaire — le lead apparaît instantanément dans votre tableau.</p>
+      <h2 id="cardTitle">Nouveau prospect</h2>
+      <p id="cardSubtitle">Remplissez le formulaire — le lead apparaît instantanément dans votre tableau.</p>
     </div>
 
     <div id="alert-success" class="alert alert-success" role="alert">
@@ -297,22 +291,18 @@
 
     <form id="leadForm" novalidate>
       <div class="form-grid">
-
         <div class="form-group">
-          <label for="nom">Nom complet <span class="req">*</span></label>
-          <input type="text" id="nom" name="nom" placeholder="Ex. : Marie Martin" required autocomplete="name"/>
+          <label for="name">Nom complet <span class="req">*</span></label>
+          <input type="text" id="name" name="name" placeholder="Ex. : Marie Martin" required autocomplete="name"/>
         </div>
-
         <div class="form-group">
           <label for="email">Email <span class="req">*</span></label>
           <input type="email" id="email" name="email" placeholder="marie@exemple.com" required autocomplete="email"/>
         </div>
-
         <div class="form-group">
-          <label for="telephone">Téléphone <span class="req">*</span></label>
-          <input type="tel" id="telephone" name="telephone" placeholder="06 12 34 56 78" required autocomplete="tel"/>
+          <label for="phone">Téléphone <span class="req">*</span></label>
+          <input type="tel" id="phone" name="phone" placeholder="06 12 34 56 78" required autocomplete="tel"/>
         </div>
-
         <div class="form-group">
           <label for="source">Source <span class="req">*</span></label>
           <select id="source" name="source" required>
@@ -325,7 +315,6 @@
             <option value="Autre">Autre</option>
           </select>
         </div>
-
         <div class="form-group score-group">
           <span class="score-label">Score de qualification</span>
           <div class="score-options">
@@ -347,12 +336,10 @@
             </div>
           </div>
         </div>
-
         <div class="form-group full">
           <label for="message">Message / Projet <span class="req">*</span></label>
           <textarea id="message" name="message" placeholder="Décrivez le projet ou la demande du prospect..." required></textarea>
         </div>
-
       </div>
 
       <button type="submit" class="btn-submit" id="submitBtn">
@@ -368,9 +355,32 @@
 </footer>
 
 <script>
-  const API_URL = "https://lead-ingest-api-production.up.railway.app/api/leads";
+  const API_URL = "https://lead-ingest-api-production.up.railway.app/api/ingest-lead";
   const API_KEY = "amouzougan_ryan05082001";
 
+  // ─── Lecture de l'agency_id dans l'URL ───────────────────────────────────
+  const params = new URLSearchParams(window.location.search);
+  const AGENCY_ID = params.get("agency");
+
+  // Regex UUID v4
+  const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+  if (!AGENCY_ID || !UUID_RE.test(AGENCY_ID)) {
+    // Lien invalide : affiche l'état d'erreur, cache le formulaire
+    document.getElementById("formCard").style.display = "none";
+    document.getElementById("errorState").style.display = "block";
+  } else {
+    // Optionnel : charger le nom de l'agence via l'API
+    fetch(`https://lead-ingest-api-production.up.railway.app/api/leads?agency_id=${AGENCY_ID}`, {
+      headers: { "X-API-Key": API_KEY }
+    })
+    .then(r => r.ok ? r.json() : null)
+    .catch(() => null);
+    // Note : si tu ajoutes GET /api/agencies/{id} plus tard,
+    // remplace la ligne ci-dessus pour afficher le vrai nom de l'agence.
+  }
+
+  // ─── Formulaire ────────────────────────────────────────────────────────────
   const form = document.getElementById("leadForm");
   const submitBtn = document.getElementById("submitBtn");
   const spinner = document.getElementById("spinner");
@@ -403,14 +413,14 @@
     alertSuccess.classList.remove("show");
     alertError.classList.remove("show");
 
-    const nom = form.nom.value.trim();
-    const email = form.email.value.trim();
-    const telephone = form.telephone.value.trim();
-    const source = form.source.value;
+    const name    = form.name.value.trim();
+    const email   = form.email.value.trim();
+    const phone   = form.phone.value.trim();
+    const source  = form.source.value;
     const message = form.message.value.trim();
-    const score = form.querySelector('input[name="score"]:checked')?.value || "B";
+    const score   = form.querySelector('input[name="score"]:checked')?.value || "B";
 
-    if (!nom || !email || !telephone || !source || !message) {
+    if (!name || !email || !phone || !source || !message) {
       showAlert("error", "Veuillez remplir tous les champs obligatoires.");
       return;
     }
@@ -424,7 +434,11 @@
           "Content-Type": "application/json",
           "X-API-Key": API_KEY
         },
-        body: JSON.stringify({ nom, email, telephone, source, message, score })
+        body: JSON.stringify({
+          agency_id: AGENCY_ID,
+          name, email, phone, source, message,
+          property_reference: score
+        })
       });
 
       if (res.ok) {
